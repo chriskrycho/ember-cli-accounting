@@ -18,16 +18,16 @@ import { number } from "./settings";
  *
  * @method unformat
  * @for accounting
- * @param {String|Array<String>} value The string or array of strings containing the number/s to parse.
- * @param {Number}               decimal Number of decimal digits of the resultant number
+ * @param value The string or array of strings containing the number/s to parse.
+ * @param decimal Number of decimal digits of the resultant number
  * @return {Float} The parsed number
  */
-function unformat(value, decimal) {
+function unformat(value: string | string[] | number, decimal?: string | number): number | number[] {
   // Recursively unformat arrays:
   if (Array.isArray(value)) {
     return value.map(function(val) {
       return unformat(val, decimal);
-    });
+    }).reduce((arr: number[], val) => arr.concat(val), []);
   }
 
   // Fails silently (need decent errors):
@@ -42,12 +42,12 @@ function unformat(value, decimal) {
   decimal = decimal || number.decimal;
 
    // Build regex to strip out everything except digits, decimal point and minus sign:
-  var regex = new RegExp("[^0-9-" + decimal + "]", ["g"]);
+  var regex = new RegExp("[^0-9-" + decimal + "]", "g");
   var unformatted = parseFloat(
     ("" + value)
     .replace(/\((.*)\)/, "-$1") // replace bracketed values with negatives
     .replace(regex, '')         // strip out any cruft
-    .replace(decimal, '.')      // make sure decimal point is standard
+    .replace(decimal as string, '.')      // make sure decimal point is standard
   );
 
   // This will fail silently which may cause trouble, let's wait and see:

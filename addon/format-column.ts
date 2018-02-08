@@ -3,6 +3,13 @@ import { defaults, checkPrecision, isObject, checkCurrencyFormat } from "./utils
 import formatNumber from "./format-number";
 import unformat from "./unformat";
 
+export type NumberFormat = {
+  precision: number;
+  thousand: string;
+  decimal: string;
+  format: string;
+};
+
 /**
  * Format a list of numbers into an accounting column, padding with whitespace
  * to line up currency symbols, thousand separators and decimals places
@@ -26,7 +33,9 @@ import unformat from "./unformat";
  * @param {String}        [format="%s%v"] String with the format to apply, where %s is the currency symbol and %v is the value.
  * @return {Array<String>} array of accouting-formatted number strings of same length
  */
-function formatColumn(list, symbol, precision, thousand, decimal, format) {
+function formatColumn(list: number[], symbol: NumberFormat);
+function formatColumn(list: number[], symbol: string, precision: number, thousand: string, decimal: string, format: string);
+function formatColumn(list: number[], symbol: NumberFormat | string, precision?: number, thousand?: string, decimal?: string, format?: string) {
   if (!list) {
     return [];
   }
@@ -59,7 +68,7 @@ function formatColumn(list, symbol, precision, thousand, decimal, format) {
       return formatColumn(val, opts);
     } else {
       // Clean up the value
-      val = unformat(val);
+      val = unformat(val) as number;
 
       // Choose which format to use for this value (pos, neg or zero):
       var useFormat = val > 0 ? formats.pos : val < 0 ? formats.neg : formats.zero;
