@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-accounting",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Ember CLI addon for using accounting.js",
   "keywords": [
     "ember-addon",
@@ -21,7 +21,9 @@
   "scripts": {
     "build": "ember build",
     "start": "ember serve",
-    "test": "ember try:each"
+    "test": "ember try:each",
+    "prepublishOnly": "ember ts:precompile",
+    "postpublish": "ember ts:clean"
   },
   "repository": {
     "type": "git",
@@ -31,6 +33,9 @@
     "ember-cli-babel": "^6.10.0"
   },
   "devDependencies": {
+    "@types/ember": "^2.8.8",
+    "@types/ember-testing-helpers": "^0.0.3",
+    "@types/rsvp": "^4.0.1",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
     "ember-cli": "~2.17.0",
@@ -42,13 +47,15 @@
     "ember-cli-qunit": "^4.1.1",
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
+    "ember-cli-typescript": "typed-ember/ember-cli-typescript#addon-support",
     "ember-cli-uglify": "^2.0.0",
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.17.0",
-    "loader.js": "^4.2.3"
+    "loader.js": "^4.2.3",
+    "typescript": "^2.7.1"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
